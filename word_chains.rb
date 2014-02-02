@@ -15,30 +15,28 @@ def same_length(word, dictionary)
   dictionary.keep_if { |dict_word| word.length == dict_word.length }
 end
 
-def explore_words(source, dictionary)
+def find_chain(source, target, dictionary)
   words_to_expand = [source]
-  all_reachable_words = [source]
+  parents = {}
   candidate_words = same_length(source, dictionary)
-  p "EXPAND_LENGTH = 1"
-  p "REACH Length = 1"
-  p "candidates = #{candidate_words.length}"
 
   until words_to_expand.empty?
     current_word = words_to_expand.shift
     current_word_children = adjacent_words(current_word, candidate_words)
     current_word_children.each do |child_word|
-      words_to_expand << child_word
-      all_reachable_words << child_word
-      candidate_words.delete(child_word)
+      unless parents.include?(child_word)
+        words_to_expand << child_word
+        parents[child_word] = current_word
+        candidate_words.delete(child_word)
+        return parents if child_word == target
+      end
     end
   end
 
-  p "reachable #{all_reachable_words.length}"
-  p "candidates #{candidate_words.length}"
-  all_reachable_words
+  nil
 end
 
 dict = File.readlines('dictionary.txt')
 dict.map! { |word| word.chomp }
 
-explore_words("duck", dict)
+p find_chain("duck", "ruby", dict)
