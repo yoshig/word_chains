@@ -1,6 +1,7 @@
-Trying to solve http://web.archive.org/web/20130215052516/http://rubyquiz.com/quiz44.html.
+#My solution to the RubyQuiz.com problem: http://web.archive.org/web/20130215052516/http://rubyquiz.com/quiz44.html.
 
-My general strategy is as follows:
+##My general strategy is as follows:
+
 Beginning with the original word, cut down the dictionary to only include words of the same length. This will be your wordbank.
 
 Create a Hash that will contain keys of words, and values of words that are one letter different from the original word. To start, it will be empty.
